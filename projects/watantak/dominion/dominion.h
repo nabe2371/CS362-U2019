@@ -128,22 +128,4 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
 /* Set array position of each player who won (remember ties!) to
    1, others to 0 */
 
-// new function for the baron card
-int baronRefact(int choice1, struct gameState *state);
-
-// new function for the minion card
-int minionRefact(int choice1, int choice2, struct gameState *state, int handPos);
-
-// new function for the ambassador card
-int ambassadorRefact(int choice1, int choice2, struct gameState *state, int handPos);
-
-// new function for the tribute card
-int tributeRefact(struct gameState *state);
-
-// helper function for the tributeRefact() function
-void nextPlayerDiscardToDeck(struct gameState *state);
-
-// new function for the mine card
-int mineRefact(int choice1, int choice2, struct gameState *state, int handPos);
-
 #endif

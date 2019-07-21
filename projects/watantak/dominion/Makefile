@@ -29,6 +29,143 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
+unittest1: unittest1.c dominion.o rngs.o
+	gcc -o unittest1 -g unittest1.c dominion.o rngs.o $(CFLAGS)
+
+unittest2: unittest2.c dominion.o rngs.o
+	gcc -o unittest2 -g unittest2.c dominion.o rngs.o $(CFLAGS)
+
+unittest3: unittest3.c dominion.o rngs.o
+	gcc -o unittest3 -g unittest3.c dominion.o rngs.o $(CFLAGS)
+
+unittest4: unittest4.c dominion.o rngs.o
+	gcc -o unittest4 -g unittest4.c dominion.o rngs.o $(CFLAGS)
+
+unittest5: unittest5.c dominion.o rngs.o
+	gcc -o unittest5 -g unittest5.c dominion.o rngs.o $(CFLAGS)
+
+cardtest1: cardtest1.c dominion.o rngs.o
+	gcc -o cardtest1 -g cardtest1.c dominion.o rngs.o $(CFLAGS)
+
+cardtest2: cardtest2.c dominion.o rngs.o
+	gcc -o cardtest2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
+
+cardtest3: cardtest3.c dominion.o rngs.o
+	gcc -o cardtest3 -g cardtest3.c dominion.o rngs.o $(CFLAGS)
+
+cardtest4: cardtest4.c dominion.o rngs.o
+	gcc -o cardtest4 -g cardtest4.c dominion.o rngs.o $(CFLAGS)
+
+cardtest5: cardtest5.c dominion.o rngs.o
+	gcc -o cardtest5 -g cardtest5.c dominion.o rngs.o $(CFLAGS)
+
+unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c cardtest1.c cardtest2.c cardtest3.c cardtest4.c cardtest5.c dominion.o rngs.o
+	
+	echo "Result for running unit tests:" > unittestresults.out
+	echo >> unittestresults.out
+	echo >> unittestresults.out
+	echo "unittest1.c: Test Results" >> unittestresults.out
+	gcc -o unittest1 -g unittest1.c dominion.o rngs.o $(CFLAGS)
+	./unittest1 >> unittestresults.out
+	echo >> unittestresults.out
+	echo "unittest1.c: Coverage Information (see Function 'baronRefact' below)" >> unittestresults.out
+	echo >> unittestresults.out
+	gcov dominion.c -b -f >> unittestresults.out
+	echo >> unittestresults.out
+	
+	echo >> unittestresults.out
+	echo "unittest2.c: Test Results" >> unittestresults.out
+	gcc -o unittest2 -g unittest2.c dominion.o rngs.o $(CFLAGS)
+	./unittest2 >> unittestresults.out
+	echo >> unittestresults.out
+	echo "unittest2.c: Coverage Information (see Function 'minionRefact' below)" >> unittestresults.out
+	echo >> unittestresults.out
+	gcov dominion.c -b -f >> unittestresults.out
+	echo >> unittestresults.out
+	
+	echo >> unittestresults.out
+	echo "unittest3.c: Test Results" >> unittestresults.out
+	gcc -o unittest3 -g unittest3.c dominion.o rngs.o $(CFLAGS)
+	./unittest3 >> unittestresults.out
+	echo >> unittestresults.out
+	echo "unittest3.c: Coverage Information (see Function 'ambassadorRefact' below)" >> unittestresults.out
+	echo >> unittestresults.out
+	gcov dominion.c -b -f >> unittestresults.out
+	echo >> unittestresults.out
+		
+	echo >> unittestresults.out
+	echo "unittest4.c: Test Results" >> unittestresults.out
+	gcc -o unittest4 -g unittest4.c dominion.o rngs.o $(CFLAGS)
+	./unittest4 >> unittestresults.out
+	echo >> unittestresults.out
+	echo "unittest4.c: Coverage Information (see Function 'tributeRefact' below)" >> unittestresults.out
+	echo >> unittestresults.out
+	gcov dominion.c -b -f >> unittestresults.out
+	echo >> unittestresults.out
+	
+	echo >> unittestresults.out
+	echo "unittest5.c: Test Results" >> unittestresults.out
+	gcc -o unittest5 -g unittest5.c dominion.o rngs.o $(CFLAGS)
+	./unittest5 >> unittestresults.out
+	echo >> unittestresults.out
+	echo "unittest5.c: Coverage Information (see Function 'mineRefact' below)" >> unittestresults.out
+	echo >> unittestresults.out
+	gcov dominion.c -b -f >> unittestresults.out
+	echo >> unittestresults.out
+		
+	echo >> unittestresults.out
+	echo "cardtest1.c: Test Results" >> unittestresults.out
+	gcc -o cardtest1 -g cardtest1.c dominion.o rngs.o $(CFLAGS)
+	./cardtest1 >> unittestresults.out
+	echo >> unittestresults.out
+	echo "cardtest1.c: Coverage Information (see Function 'initializeGame' below)" >> unittestresults.out
+	echo >> unittestresults.out
+	gcov dominion.c -b -f >> unittestresults.out
+	echo >> unittestresults.out
+	     
+	
+	echo >> unittestresults.out
+	echo "cardtest2.c: Test Results" >> unittestresults.out
+	gcc -o cardtest2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
+	./cardtest2 >> unittestresults.out
+	echo >> unittestresults.out
+	echo "cardtest2.c: Coverage Information (see Function 'shuffle' below)" >> unittestresults.out
+	echo >> unittestresults.out
+	gcov dominion.c -b -f >> unittestresults.out
+	echo >> unittestresults.out
+	        
+	echo >> unittestresults.out
+	echo "cardtest3.c: Test Results" >> unittestresults.out
+	gcc -o cardtest3 -g cardtest3.c dominion.o rngs.o $(CFLAGS)
+	./cardtest3 >> unittestresults.out
+	echo >> unittestresults.out
+	echo "cardtest3.c: Coverage Information (see Function 'entTurn' below)" >> unittestresults.out
+	echo >> unittestresults.out
+	gcov dominion.c -b -f >> unittestresults.out
+	echo >> unittestresults.out
+	       
+	echo >> unittestresults.out
+	echo "cardtest4.c: Test Results" >> unittestresults.out
+	gcc -o cardtest4 -g cardtest4.c dominion.o rngs.o $(CFLAGS)
+	./cardtest4 >> unittestresults.out
+	echo >> unittestresults.out
+	echo "cardtest4.c: Coverage Information (see Function 'getWinners' below)" >> unittestresults.out
+	echo >> unittestresults.out
+	gcov dominion.c -b -f >> unittestresults.out
+	echo >> unittestresults.out
+	       
+	echo >> unittestresults.out
+	echo "cardtest5.c: Test Results" >> unittestresults.out
+	gcc -o cardtest5 -g cardtest5.c dominion.o rngs.o $(CFLAGS)
+	./cardtest5 >> unittestresults.out
+	echo >> unittestresults.out
+	echo "cardtest5.c: Coverage Information (see Function 'drawCard' below)" >> unittestresults.out
+	echo >> unittestresults.out
+	gcov dominion.c -b -f >> unittestresults.out
+	echo >> unittestresults.out
+	
+	echo "End of unittestresults.out" >> unittestresults.out
+
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
@@ -36,4 +173,5 @@ player: player.c interface.o
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out badTestDrawCard testDrawCard testDrawCard.exe unittest1 unittest2 unittest3 unittest4 unittest5 cardtest1 cardtest2 cardtest3 cardtest4 cardtest5
+
