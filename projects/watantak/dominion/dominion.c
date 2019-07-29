@@ -1316,6 +1316,12 @@ int tributeRefact(struct gameState *state)
 	// added an int variable to hold the next player
 	int nextPlayer = currentPlayer + 1;
 
+	// adjust the next player to keep it valid
+	if (nextPlayer > (state->numPlayers - 1))
+	{
+		nextPlayer = 0;
+	}
+
 	// added a container for revealed cards
 	int tributeRevealedCards[2] = { -1, -1 };
 
@@ -1413,16 +1419,18 @@ void nextPlayerDiscardToDeck(struct gameState *state)
 {
 	int currentPlayer = whoseTurn(state);
 	int nextPlayer = currentPlayer + 1;
-
-	for (int i = 0; i < state->discardCount[nextPlayer]; i++)
+	
+	// adjust the next player to keep it valid
+	if (nextPlayer > (state->numPlayers - 1))
 	{
-		state->deck[nextPlayer][i] = state->discard[nextPlayer][i];		//Move to deck
-		state->deckCount[nextPlayer]++;
-		state->discard[nextPlayer][i] = -1;
-		state->discardCount[nextPlayer]--;
+		nextPlayer = 0;
 	}
 
-	shuffle(nextPlayer, state);//Shuffle the deck
+// deleted the unnecessary for-loop and call to shuffle() function, and cleaned up the code
+	state->deck[nextPlayer][state->deckCount[nextPlayer]] = state->discard[nextPlayer][state->discardCount[nextPlayer] - 1];		//Move to deck
+	state->deckCount[nextPlayer]++;
+	state->discard[nextPlayer][state->discardCount[nextPlayer] - 1] = -1;
+	state->discardCount[nextPlayer]--;
 	
 	return;
 }

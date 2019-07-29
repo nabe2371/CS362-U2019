@@ -29,6 +29,40 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
+randomtestresults: randomtestcard1.c dominion.o rngs.o
+	
+	echo "Result for running random tests:" > randomtestresults.out
+	echo >> randomtestresults.out
+	echo >> randomtestresults.out
+	echo "randomtestcard1.c: Test Results" >> randomtestresults.out
+	gcc -o randomtestcard1 -g randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+	./randomtestcard1 >> randomtestresults.out
+	echo >> randomtestresults.out
+	echo "randomtestcard1.c: Coverage Information (see Function 'baronRefact' below)" >> randomtestresults.out
+	echo >> randomtestresults.out
+	gcov dominion.c -b -f >> randomtestresults.out
+	echo >> randomtestresults.out
+	
+	echo >> randomtestresults.out
+	echo "randomtestcard2.c: Test Results" >> randomtestresults.out
+	gcc -o randomtestcard2 -g randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+	./randomtestcard2 >> randomtestresults.out
+	echo >> randomtestresults.out
+	echo "randomtestcard2.c: Coverage Information (see Function 'minionRefact' below)" >> randomtestresults.out
+	echo >> randomtestresults.out
+	gcov dominion.c -b -f >> randomtestresults.out
+	echo >> randomtestresults.out
+	
+	echo >> randomtestresults.out
+	echo "randomtestcard3.c: Test Results" >> randomtestresults.out
+	gcc -o randomtestcard3 -g randomtestcard3.c dominion.o rngs.o $(CFLAGS)
+	./randomtestcard3 >> randomtestresults.out
+	echo >> randomtestresults.out
+	echo "randomtestcard3.c: Coverage Information (see Function 'tributeRefact' below)" >> randomtestresults.out
+	echo >> randomtestresults.out
+	gcov dominion.c -b -f >> randomtestresults.out
+	echo >> randomtestresults.out
+
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
@@ -36,4 +70,5 @@ player: player.c interface.o
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe randomtestcard1 randomtestcard2 randomtestcard3
+
