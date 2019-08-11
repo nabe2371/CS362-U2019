@@ -39,7 +39,7 @@ enum CARD
    baron, /* choice1: boolean for discard of estate */
    /* Discard is always of first (lowest index) estate */
    great_hall,
-   minion, /* choice1:  1 = +2 coin, 2 = redraw */
+   minion, /* FIXED THE BUG -> Now, choice1:  1 = +2 coin, 0 = redraw */
    steward, /* choice1: 1 = +2 card, 2 = +2 coin, 3 = trash 2 (choice2,3) */
    tribute,
 

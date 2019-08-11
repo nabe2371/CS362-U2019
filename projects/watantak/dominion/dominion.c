@@ -780,7 +780,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	  return -1;
 	}
 
-      if ( (getCost(state->hand[currentPlayer][choice1]) + 3) > getCost(choice2) )
+/*
+*	Fixed the bug: Changed the conditional operator from '>' to '<'
+*/
+      if ( (getCost(state->hand[currentPlayer][choice1]) + 3) < getCost(choice2) )
 	{
 	  return -1;
 	}
@@ -874,7 +877,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	    }
 	    if (supplyCount(estate, state) > 0){
 	      gainCard(estate, state, 0, currentPlayer);
-	      state->supplyCount[estate]--;//Decrement estates
+/*
+*	Fixed the bug: No need to decrement the supply count here
+*/
+//	      state->supplyCount[estate]--;//Decrement estates
 	      if (supplyCount(estate, state) == 0){
 		isGameOver(state);
 	      }
@@ -891,7 +897,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       else{
 	if (supplyCount(estate, state) > 0){
 	  gainCard(estate, state, 0, currentPlayer);//Gain an estate
-	  state->supplyCount[estate]--;//Decrement Estates
+/*
+*	Fixed the bug: No need to decrement the supply count here
+*/
+//	  state->supplyCount[estate]--;//Decrement Estates
 	  if (supplyCount(estate, state) == 0){
 	    isGameOver(state);
 	  }
@@ -918,13 +927,18 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 			
       //discard card from hand
       discardCard(handPos, currentPlayer, state, 0);
-			
-      if (choice1)		//+2 coins
+/*
+*	Fixed the bug: if-else if condtions only look at choice1
+*/
+      if (choice1 == 1)		//+2 coins
 	{
 	  state->coins = state->coins + 2;
 	}
-			
-      else if (choice2)		//discard hand, redraw 4, other players with 5+ cards discard hand and draw 4
+
+/*
+*	Fixed the bug: if-else if condtions only look at choice1
+*/
+      else if (choice1 == 0)		//discard hand, redraw 4, other players with 5+ cards discard hand and draw 4
 	{
 	  //discard hand
 	  while(numHandCards(state) > 0)
@@ -1006,7 +1020,11 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	    
       else{
 	if (state->deckCount[nextPlayer] == 0){
-	  for (i = 0; i < state->discardCount[nextPlayer]; i++){
+/*
+*	Fixed the bug: Using a new variable in the loop condition istead of discardCount
+*/
+		int iniDisCount = state->discardCount[nextPlayer];
+	  for (i = 0; i < iniDisCount; i++){
 	    state->deck[nextPlayer][i] = state->discard[nextPlayer][i];//Move to deck
 	    state->deckCount[nextPlayer]++;
 	    state->discard[nextPlayer][i] = -1;
@@ -1017,10 +1035,16 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	} 
 	tributeRevealedCards[0] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];
 	state->deck[nextPlayer][state->deckCount[nextPlayer]--] = -1;
-	state->deckCount[nextPlayer]--;
+/*
+*	Fixed the bug: No need to decrement the deckCount here
+*/
+//	state->deckCount[nextPlayer]--;
 	tributeRevealedCards[1] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];
 	state->deck[nextPlayer][state->deckCount[nextPlayer]--] = -1;
-	state->deckCount[nextPlayer]--;
+/*
+*	Fixed the bug: No need to decrement the deckCount here
+*/
+//	state->deckCount[nextPlayer]--;
       }    
 		       
       if (tributeRevealedCards[0] == tributeRevealedCards[1]){//If we have a duplicate card, just drop one 
@@ -1242,11 +1266,25 @@ int discardCard(int handPos, int currentPlayer, struct gameState *state, int tra
     {
       //reduce number of cards in hand
       state->handCount[currentPlayer]--;
+/*
+*	Fixed the bug:	Added the lines to move the card from the played pile to discard set
+*					and adjust discardCount & playedCardCount
+*/
+	  state->discard[currentPlayer][state->discardCount[currentPlayer]++] = state->playedCards[state->playedCardCount - 1];	//Discard
+	  state->playedCards[state->playedCardCount - 1] = - 1;		// set played card to -1
+	  state->playedCardCount--;
     }
   else if ( state->handCount[currentPlayer] == 1 ) //only one card in hand
     {
       //reduce number of cards in hand
       state->handCount[currentPlayer]--;
+/*
+*	Fixed the bug:	Added the lines to move the card from the played pile to discard set 
+*					and adjust discardCount & playedCardCount
+*/
+	  state->discard[currentPlayer][state->discardCount[currentPlayer]++] = state->playedCards[state->playedCardCount - 1];	//Discard
+	  state->playedCards[state->playedCardCount - 1] = -1;		// set played card to -1
+	  state->playedCardCount--;
     }
   else 	
     {
@@ -1256,6 +1294,13 @@ int discardCard(int handPos, int currentPlayer, struct gameState *state, int tra
       state->hand[currentPlayer][state->handCount[currentPlayer] - 1] = -1;
       //reduce number of cards in hand
       state->handCount[currentPlayer]--;
+/*
+*	Fixed the bug:	Added the lines to move the card from the played pile to discard set
+*					and adjust discardCount & playedCardCount
+*/
+	  state->discard[currentPlayer][state->discardCount[currentPlayer]++] = state->playedCards[state->playedCardCount - 1];	//Discard
+	  state->playedCards[state->playedCardCount - 1] = -1;		// set played card to -1
+	  state->playedCardCount--;
     }
 	
   return 0;
